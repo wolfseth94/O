@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script src="/js/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-messaging.js"></script>
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi Hermoso</title>
+
+    <!-- Vinculo correcto de Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <!-- Estilos adicionales -->
+    <style>
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fce4ec;
+            color: #333;
+        }
+
+        .hero {
+            background: url('https://via.placeholder.com/1500x800/ff6699/ffffff?text=Feliz+San+Valentín') no-repeat center center;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #000000;
+        }
+
+        .btn-custom {
+            background-color: #ff3366;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+
+        .btn-custom:hover {
+            background-color: #ff6699;
+            transform: scale(1.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-no {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-no:hover {
+            background-color: #e57373;
+            transform: scale(1.1);
+            cursor: not-allowed;
+        }
+
+        .btn-no.moving {
+            animation: moveButton 1s infinite;
+        }
+
+        @keyframes moveButton {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(20px); }
+            50% { transform: translateX(0); }
+            75% { transform: translateX(-20px); }
+            100% { transform: translateX(0); }
+        }
+
+        .section {
+            padding: 70px 0;
+            text-align: center;
+        }
+
+        .heart {
+            color: red;
+            font-size: 50px;
+            animation: heartbeat 1s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .container-custom {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .message {
+            font-size: 1.5rem;
+            color: #ff6699;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #ff6699;
+            color: white;
+        }
+        .carousel-inner img {
+            max-height: 500px; /* Limita la altura máxima de las imágenes */
+            width: 100%; /* Asegura que la imagen ocupe todo el ancho del slider */
+            height: 100%; /* Asegura que la imagen ocupe toda la altura del slider */
+            object-fit: contain; /* Hace que las imágenes cubran el área del slider sin distorsionarse */
+        }
+        .carousel {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sección Hero con fondo -->
+    <div class="hero">
+        <div>
+            <h1 class="display-3">¡Happy Valentines Day!<br> 😍🥰💖😍🥰💖😍🥰</h1>
+            <p class="lead">Todos los dias son muy especiales por que los paso a tu lado pero hoy es aun mucho mejor por esta fecha tan especial<br>Agradezco infinitamente a la vida por permitirme coincidir contigo<br>No tienes idea de lo feliz que me haces día a día...<br>Por eso y mucho mas he decidido decirte lo siguiente:</p>
+            <a href="#propuesta" class="btn btn-custom btn-lg">He aqui lo que te tengo que decir:</a>
+        </div>
+    </div>
+
+    <!-- Sección de la propuesta -->
+    <div class="section" id="propuesta">
+        <div class="container-custom">
+    
+            <h2 class="message">En realidad no es algo que te tenga que decir, es más bien una pregunta pero comenzaré a darte las razones...</h2>
+            <div class="heart">
+                ❤️
+            </div>
+            <p class="lead">Desde que te conocí por lo menos de mi parte senti mucha conexión y atracción hacia a ti<br><br>Para serte sincero no andaba en busca de nada de esto ni de una relación formal,<br>estaba demasiado lastimado y cerrado a tener algo bonito de nuevo,<br>pero algo en ti desperto mi interes y que hizo sentirme querido...</p>
+            <p class="lead">Bueno para no hacerte mas extenso esto mejor te dejo una carta para que sepas todo lo que siento por ti:</p>
+            <button class="btn btn-custom btn-lg" onclick="accionBoton()">Carta para Oscar</button>
+            <div class="heart">
+                ❤️
+            </div>
+<div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="4" aria-label="Slide 5"></button>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="5" aria-label="Slide 6"></button>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="6" aria-label="Slide 7"></button>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="7" aria-label="Slide 8"></button>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="8" aria-label="Slide 9"></button>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="9" aria-label="Slide 10"></button>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="10" aria-label="Slide 11"></button>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="11" aria-label="Slide 12"></button>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="12" aria-label="Slide 13"></button>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="13" aria-label="Slide 1"></button>
+        </div>
+
+        <div class="carousel-inner" id="slide">
+            <div class="carousel-item active">
+                <img src="/oscar/img/1.jpg" class="d-block w-100" alt="Imagen 1">
+            </div>
+            <div class="carousel-item">
+                <img src="/oscar/img/2.jpg" class="d-block w-100" alt="Imagen 2">
+            </div>
+            <div class="carousel-item">
+                <img src="/oscar/img/3.jpg" class="d-block w-100" alt="Imagen 3">
+            </div>
+             <div class="carousel-item">
+                <img src="/oscar/img/4.jpg" class="d-block w-100" alt="Imagen 4">
+            </div>
+            <div class="carousel-item">
+                <img src="/oscar/img/5.jpg" class="d-block w-100" alt="Imagen 5">
+            </div>
+            <div class="carousel-item">
+                <img src="/oscar/img/6.jpg" class="d-block w-100" alt="Imagen 6">
+            </div>
+            <div class="carousel-item">
+                <img src="/oscar/img/7.jpg" class="d-block w-100" alt="Imagen 7">
+            </div>
+            <div class="carousel-item">
+                <img src="/oscar/img/8.jpg" class="d-block w-100" alt="Imagen 8">
+            </div>
+            <div class="carousel-item">
+                <img src="/oscar/img/9.jpg" class="d-block w-100" alt="Imagen 9">
+            </div>
+            <div class="carousel-item">
+                <img src="/oscar/img/10.jpg" class="d-block w-100" alt="Imagen 10">
+            </div>
+            <div class="carousel-item">
+                <img src="/oscar/img/11.jpg" class="d-block w-100" alt="Imagen 11">
+            </div>
+            <div class="carousel-item">
+                <img src="/oscar/img/12.jpg" class="d-block w-100" alt="Imagen 12">
+            </div>
+            <div class="carousel-item">
+                <img src="/oscar/img/13.jpg" class="d-block w-100" alt="Imagen 13">
+            </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+            <h3>¿Quieres ser mi novio?</h3>
+            <div class="d-flex justify-content-center mt-4" id="question">
+                <!-- Botón "Sí, quiero" -->
+                <a href="#respuesta" class="btn btn-success btn-lg mx-2 ">Sí, quiero</a>
+                <!-- Botón "No" con animación y desactivado -->
+                <button id="btn-no" class="btn-no mx-2" onclick="moveNoButton()">No, gracias</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensaje de Respuesta positiva -->
+    <div class="section" id="respuesta">
+        <div class="container-custom">
+            <h2>¡Dijiste que si!</h2>
+            <p class="lead">🥰🥰🥰🥰🥰🥰🥰🥰</p>
+            <p class="lead">Estoy tan feliz de que hayas aceptado.</p>
+            <p class="lead"> Ahora, ¡vamos a disfrutar este hermoso día juntos!</p>
+            <p class="lead">Con la siguiente sorpresa que te tengo.</p>
+            <button class="btn btn-custom btn-lg" onclick="accionBoton2()">Vienes?</button>
+            <div class="heart">
+                ❤️
+            </div>
+        </div>
+    </div>
+    <!-- Formulario de contacto (opcional) -->
+    <div class="section">
+        <div class="container-custom" id="contacto">
+            <h3>¡Déjame un mensaje!</h3>
+            <p>Si decides decirme "Sí" o si solo quieres hablar, me encantaría saber que piensas.</p>
+            <form action="#" method="post">
+                <a href="https://wa.me/526144873515" class="btn btn-custom btn-lg" target="_blank">Enviar mensaje</a>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>Creado con ❤️ por Manuel (tu chiple empalagoso)😝</p>
+    </div>
+
+    <!-- Vinculos de Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script> 
+       <script>
+        // Función que mueve el botón "No" y lo desactiva
+        function moveNoButton() {
+            var noButton = document.getElementById("btn-no");
+            noButton.setAttribute("disabled", "true");
+            noButton.classList.add("moving");
+            setTimeout(function() {
+                noButton.innerHTML = "¡Lo siento, no puedo aceptarlo!";
+            }, 1000);
+        }
+           function accionBoton() {
+            // 1. Desplazar al div
+            document.getElementById("slide").scrollIntoView({ behavior: "smooth" });
+
+            // 2. Redirigir después de un pequeño retraso
+            setTimeout(function() {
+                window.location.href = "https://drive.google.com/uc?id=1PWUMPirzCg7vB3-M4f6BKrHO-fOWmE7H&export=download"; // Cambia la URL a la que deseas redirigir
+            }, 1000); // Espera 1.5 segundos para dar tiempo al desplazamiento
+        }
+           function accionBoton2() {
+            // 1. Desplazar al div
+            document.getElementById("contacto").scrollIntoView({ behavior: "smooth" });
+
+            // 2. Redirigir después de un pequeño retraso
+            setTimeout(function() {
+                 window.open("https://maps.app.goo.gl/BGCFWaBRXUM8ZUgm8", "_blank");
+                //window.location.href = "https://maps.app.goo.gl/BGCFWaBRXUM8ZUgm8"; // Cambia la URL a la que deseas redirigir
+            }, 1000); // Espera 1.5 segundos para dar tiempo al desplazamiento
+        }  
+    </script>
+</body>
+</html>
+
+
